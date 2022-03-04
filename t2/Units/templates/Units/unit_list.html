@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}Units{% endblock title %}
+
+{% block content %}
+
+    <div lass='list-group'>
+        <table table='table table-hover'>
+            <tr>
+                <td>Unit id</td>
+                <td>Unit Code</td>
+                <td>Unit Name</td>
+                <td>Unit Lecturer</td>
+            </tr>
+            {% for unit in units %}
+                <tr>
+                    <td>{{unit.id}}</td>
+                    <td>{{unit.unit_code}}</td>
+                    <td>{{unit.unit_name}}</td>
+                    <td>{{unit.lecturer}}</td>
+                    <td>
+                        <form action='' method="POST" id='unitform'>
+                            {% csrf_token %}
+                            <button class="btn btn-success" name='upd_id' type='submit' value='{{unit.id}}' form='unitform'>Edit</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form action='' method="POST" id='unitform'>
+                            {% csrf_token %}
+                            <button class="btn btn-fail" name='del_id' type='submit' value='{{unit.id}}' form='unitform'>Delete</button>
+                        </form>
+                    </td>
+                </tr>            
+            {% endfor %}
+        </table>
+    </div>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <a href='../Unit/create'><button class="btn btn-success">Add New Unit</button></a>
+        </div>        
+    </div>
+
+{% endblock content %}

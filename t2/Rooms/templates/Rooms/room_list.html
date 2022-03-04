@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block title %}Rooms{% endblock title %}
+
+{% block content %}
+
+    <div class='list-group'>
+        <table table='table table-hover'>
+            <tr>
+                <td>Room id</td>
+                <td>Room Location</td>
+                <td>Room Capacity</td>
+            </tr>
+            {% for room in rooms %}
+                <tr>
+                    <td>{{room.room_id}}</td>
+                    <td>{{room.room_location}}</td>
+                    <td>{{room.room_carrying_capacity}}</td>
+                    <td>
+                        <form action='' method="POST" id='unitform'>
+                            {% csrf_token %}
+                            <button class="btn btn-success" name='upd_id' type='submit' value='{{room.id}}' form='unitform'>Edit</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form action='' method="POST" id='unitform'>
+                            {% csrf_token %}
+                            <button class="btn btn-fail" name='del_id' type='submit' value='{{room.id}}' form='unitform'>Delete</button>
+                        </form>
+                    </td>
+                </tr>            
+            {% endfor %}
+        </table>
+    </div>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <a href='../Room/create'><button class="btn btn-success">Add New Room</button></a>
+        </div>        
+    </div>
+    <div>
+        <p>
+            <h4>
+                Check available rooms
+            </h4>
+            <form method="POST" id="free-room">
+                {% csrf_token %}
+                <label for="dy">Enter Day</label>
+                <select name="dy" id="dy" form="free-room">
+                        <option value ="monday">Monday</option>
+                        <option value ="tuesday">Tuesday</option>
+                        <option value ="wednesday">Wednesday</option>
+                        <option value ="thursday">Thursday</option>
+                        <option value ="fridagy">Friday</option>
+                </select>
+                <br>
+                <label for="tm">Enter time</label>
+                <input type="time" name="tm" id="tm" required placeholder="Time">
+                <br>
+                <input type="submit" name="Check for free rooms">
+            </form>
+        </p>
+        <div class='list-group'>
+            <table table='table table-hover'>
+                <tr>
+                    <td>Room id</td>
+                    <td>Room Location</td>
+                    <td>Room Capacity</td>
+                </tr>
+                {% for room in freerooms %}
+                    <tr>
+                        <td>{{room.room_id}}</td>
+                        <td>{{room.room_location}}</td>
+                        <td>{{room.room_carrying_capacity}}</td>
+                    </tr>            
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+
+{% endblock content %}

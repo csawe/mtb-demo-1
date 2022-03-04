@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Master timetable
+{% endblock title %}
+
+{% block content %}
+
+    <div lass='list-group'>
+        {% for r in rooms %}
+            <h3>{{r.room_id}}</h3>
+            <table border="1">
+                <tr>
+                    <td>Time</td>
+                    {% for t in time %}
+                    <td> {{ t.time}} </td>
+                    {% endfor %}
+                </tr>
+                {% for d in days %}
+                <tr>
+                    <td>{{d.d}}</td>
+                    {% for t in time%}
+                        <td style="text-align:center">
+                            {% for l in lectures %}
+                                {% if t.time == l.start_time and l.room.room_id == r.room_id and l.day == d.d %}               
+                                    {{l.unit.unit_name}}<br>{{l.room.room_id}} 
+                                {% endif %}
+                            {% endfor %}
+                        </td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </table>
+        {% endfor %}
+    </div>
+    <br>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <a href='../create'><button class="btn btn-success">Book a room</button></a>
+        </div>        
+    </div>
+
+{% endblock content %}

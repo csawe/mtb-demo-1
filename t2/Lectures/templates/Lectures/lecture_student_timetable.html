@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Student timetable
+{% endblock title %}
+
+{% block content %}
+
+    {% if user.is_authenticated %}
+        <p>Hello {{user.username}} belongs to {{user.department}}</p>
+        <p>
+            <h4>Your timetable is </h4>
+            <table border="1">
+                <tr>
+                    <td>Time</td>
+                    {% for t in time %}
+                        <td>{{t.time}}</td>
+                    {% endfor %}
+                </tr>
+                {% for d in days %}
+                <tr>
+                    <td>{{d.d}}</td>
+                    {% for t in time %}
+                        <td style="text-align:center">
+                            {% for l in lectures%}
+                                {% if  t.time == l.start_time and l.day == d.d and l.department == user.department %}
+                                    {{l.unit}}<br>{{l.room}}
+                                {% endif %}
+                            {% endfor %}
+                        </td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </table>
+        </p>
+    {% endif %}
+
+{% endblock content %}

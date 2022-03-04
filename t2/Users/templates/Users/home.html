@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %}Home page{% endblock title %}
+
+{% block content %}
+    {% if user.is_anonymous %}
+        <p>Kindly <a href='/User/login'>log in</a></p>
+    {% else %}
+        <p>Welcome {{user.username}} to home page</p>
+    {% endif %}
+{% endblock content %}

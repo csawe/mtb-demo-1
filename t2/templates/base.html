@@ -1,0 +1,55 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        ul {
+            margin: 10;
+            padding: 5;
+            }
+            li {
+            margin-right: 20;
+            float: left;
+            }
+            li v {
+            color: white;
+            text-align: center;
+            padding: 30;
+            }
+            li v:hover {
+            background-color: #111;
+            }
+            .active {
+            background-color: green;
+            }
+    </style>
+    <title>{% block title %}{% endblock title %}</title>
+    <nav>
+    <ul>
+        <li><a href="/Lecture">Student TT</a></li>
+        <li><a href="/Lecture/master">Master TT</a></li>
+        <li><a href="/Unit">Units</a></li>
+        <li><a href="/Room">Rooms</a></li>
+        <li><a href="/Department">Departments</a></li>
+    </ul>
+    {% if user.is_authenticated %}
+        <ul>
+            <li><a href='/User/logout'>Log out</a></li>
+        </ul>
+    {% endif %}
+    </nav>
+</head>
+<body>
+    {% if messages %}
+        {% for message in messages %}
+            <div class="container-fluid p-0">
+                <div class="alert {{ messages.tags }} alert-dismissible" role="alert" >
+                    {{ message }}
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+    {% block content %}{% endblock content %}
+</body>
+</html>

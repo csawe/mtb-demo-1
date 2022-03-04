@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Departments
+{% endblock title %}
+
+{% block content %}
+
+    <div lass='list-group'>
+        <table table='table table-hover'>
+            <tr>
+                <td>School</td>
+                <td>Name</td>
+                <td>Year</td>
+                <td>Current location</td>
+            </tr>
+            {% for department in departments %}
+                <tr>
+                    <td>{{department.school}}</td>
+                    <td>{{department.name}}</td>
+                    <td>{{department.year}}</td>
+                    <td>
+                        {% for lecture in lectures %}
+                            {% if department.name == lecture.department.name %}
+                                {{ lecture.room }}
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        <form action='' method="POST" id='departmentform'>
+                            {% csrf_token %}
+                            <button class="btn btn-success" name='update_id' type='submit' value='{{department.id}}' form='departmentform'>Edit</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form action='' method="POST" id='departmentform'>
+                            {% csrf_token %}
+                            <button class="btn btn-fail" name='delete_id' type='submit' value='{{department.id}}' form='departmentform'>Delete</button>
+                        </form>
+                    </td>
+                </tr>            
+            {% endfor %}
+        </table>
+    </div>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <a href='../Department/create'><button class="btn btn-success">Add New Department</button></a>
+        </div>        
+    </div>
+
+{% endblock content %}
