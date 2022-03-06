@@ -15,12 +15,13 @@ from .forms import DepartmentModelForm
 
 def department_create_view(request):
     form = DepartmentModelForm(request.POST or None)
-    if form.is_valid():
-        form.save()
-        messages.success(request, 'New department created')
-        return redirect('../Department')
-    else:
-        messages.error(request, 'An error has occured')
+    if request.method == "POST":
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'New department created')
+            return redirect('../Department')
+        else:
+            messages.error(request, 'An error has occured')
         
     context = {
         'form' : form,

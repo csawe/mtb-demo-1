@@ -5,18 +5,18 @@
 {% block content %}
 
     <div class='list-group'>
-        <table table='table table-hover'>
+        <table>
             <tr>
-                <td>Room id</td>
-                <td>Room Location</td>
-                <td>Room Capacity</td>
+                <th style="width:100px; height:20px">Room id</th>
+                <th style="width:100px; height:20px">Room Location</th>
+                <th style="width:100px; height:20px">Room Capacity</th>
             </tr>
             {% for room in rooms %}
                 <tr>
-                    <td>{{room.room_id}}</td>
-                    <td>{{room.room_location}}</td>
-                    <td>{{room.room_carrying_capacity}}</td>
-                    <td>
+                    <td style="width:100px; height:20px">{{room.room_id}}</td>
+                    <td style="width:100px; height:20px">{{room.room_location}}</td>
+                    <td style="width:100px; height:20px">{{room.room_carrying_capacity}}</td>
+                    <td style="width:10px">
                         <form action='' method="POST" id='unitform'>
                             {% csrf_token %}
                             <button class="btn btn-success" name='upd_id' type='submit' value='{{room.id}}' form='unitform'>Edit</button>
@@ -37,6 +37,9 @@
             <a href='../Room/create'><button class="btn btn-success">Add New Room</button></a>
         </div>        
     </div>
+
+
+    <br><br>
     <div>
         <p>
             <h4>
@@ -59,22 +62,21 @@
                 <input type="submit" name="Check for free rooms">
             </form>
         </p>
-        <div class='list-group'>
-            <table table='table table-hover'>
+            <table>
                 <tr>
-                    <td>Room id</td>
-                    <td>Room Location</td>
-                    <td>Room Capacity</td>
+                    <th style="width:100px; height:20px">Room id</th>
+                    <th style="width:100px; height:20px">Room Location</th>
+                    <th style="width:100px; height:20px">Room Capacity</th>
                 </tr>
                 {% for room in freerooms %}
                     <tr>
-                        <td>{{room.room_id}}</td>
-                        <td>{{room.room_location}}</td>
-                        <td>{{room.room_carrying_capacity}}</td>
+                        <td style="width:100px; height:20px">{{room.room_id}}</td>
+                        <td style="width:100px; height:20px">{{room.room_location}}</td>
+                        <td style="width:100px; height:20px">{{room.room_carrying_capacity}}</td>
+                        <td style="width:100px; height:20px"> <a href="../../Lecture/create">Book</a> </td>
                     </tr>            
                 {% endfor %}
             </table>
-        </div>
     </div>
 
 {% endblock content %}

@@ -1,13 +1,17 @@
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
+from django.views.generic import UpdateView
+
+
 from .forms import NewUserForm
 from .models import NewUser
 
 # Create your views here.
 def home(request):
-    return render(request, 'Users/home.html', {})
+    context = {}
+    return render(request, 'Users/home.html', context)
 
 def user_registration_view(request):
     form = NewUserForm(request.POST or None)
@@ -53,3 +57,30 @@ def user_logout_view(request):
     logout(request)
     messages.info(request, 'You have successfully logged out')
     return redirect('../../')
+
+class UserUpdateView(UpdateView):
+    template_name = 'Users/user_update.html'
+    form_class = NewUserForm
+    
+    def get_object(self):
+        id = self.kwargs.get("id")
+        return get_object_or_404(NewUser, id=id)
+    
+    def form_valid(self,form_class):
+        print(form_class.cleaned_data)
+        form_class.save()
+        messages.success(self.request, 'Log in details updated successfully.')
+        return redirect('../../')
+    
+def UserUpdateView2(request):
+    form = NewUserForm(request.POST or None)
+    user = NewUser.objects.get(id= request.user.id)
+    if form.is_valid():
+        form.save()
+        messages.success(request, 'Log in details updated successfully.')
+        return redirect('../')
+        
+    context = {
+        'form' : form
+    }
+    return render(request, 'Units/unit_update.html', context)

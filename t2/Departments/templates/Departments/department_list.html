@@ -7,19 +7,19 @@ Departments
 {% block content %}
 
     <div lass='list-group'>
-        <table table='table table-hover'>
+        <table>
             <tr>
-                <td>School</td>
-                <td>Name</td>
-                <td>Year</td>
-                <td>Current location</td>
+                <th style="width:100px; height:20px">School</th>
+                <th style="width:100px; height:20px">Name</th>
+                <th style="width:100px; height:20px">Year</th>
+                <th style="width:100px; height:20px">Current location</th>
             </tr>
             {% for department in departments %}
                 <tr>
-                    <td>{{department.school}}</td>
-                    <td>{{department.name}}</td>
-                    <td>{{department.year}}</td>
-                    <td>
+                    <td style="width:150px; height:20px">{{department.school}}</td>
+                    <td style="width:100px; height:20px">{{department.name}}</td>
+                    <td style="width:100px; height:20px">{{department.year}}</td>
+                    <td style="width:100px; height:20px">
                         {% for lecture in lectures %}
                             {% if department.name == lecture.department.name %}
                                 {{ lecture.room }}
@@ -42,6 +42,7 @@ Departments
             {% endfor %}
         </table>
     </div>
+    <br><br>
     <div class="input-group mb-3">
         <div class="input-group-prepend">
             <a href='../Department/create'><button class="btn btn-success">Add New Department</button></a>

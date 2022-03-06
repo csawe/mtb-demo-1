@@ -12,16 +12,16 @@ Student timetable
             <h4>Your timetable is </h4>
             <table border="1">
                 <tr>
-                    <td>Time</td>
+                    <th style="width:100px; height:20px">Time</th>
                     {% for t in time %}
-                        <td>{{t.time}}</td>
+                        <th style="width:100px; height:20px">{{t.time}}</th>
                     {% endfor %}
                 </tr>
                 {% for d in days %}
                 <tr>
-                    <td>{{d.d}}</td>
+                    <th style="width:100px; height:20px">{{d.d}}</td>
                     {% for t in time %}
-                        <td style="text-align:center">
+                        <td style="text-align:center; width:100px; height:20px">
                             {% for l in lectures%}
                                 {% if  t.time == l.start_time and l.day == d.d and l.department == user.department %}
                                     {{l.unit}}<br>{{l.room}}

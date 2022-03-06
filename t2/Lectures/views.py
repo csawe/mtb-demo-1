@@ -4,6 +4,7 @@ from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib import messages
 from django.views.generic import UpdateView
 from pyparsing import one_of
+from Departments.models import Department
 
 from Lectures.models import Lecture
 from Rooms.models import Room, Time
@@ -14,27 +15,37 @@ from .form import LectureModelForm
 
 def lecture_create_view(request):
     form = LectureModelForm(request.POST or None)
-    if form.is_valid():
-        #room_id = form.cleaned_data.get('room')
-        #time_occupied = form.cleaned_data.get('start_time')
-        #room = Room.objects.get(room_id=room_id)
-        #room.time_occupied.add(Time.objects.get(time_occupied=time_occupied))
-        
-        room_id = form.cleaned_data.get('room')
-        time_occupied = form.cleaned_data.get('start_time')
-        lectures = Lecture.objects.all()
-        occupied = False
-        for lec in lectures:
-            if lec.room == room_id and lec.start_time == time_occupied:
-                occupied = True
-        if occupied==False:
-            form.save()
-            messages.success(request, 'Lecture added successfuly')
-            return redirect('../Lecture/master')
+    if request.method == "POST":
+        if form.is_valid():
+            room_id = form.cleaned_data.get('room')
+            time_occupied = form.cleaned_data.get('start_time')
+            day = form.cleaned_data.get('day')
+            lectures = Lecture.objects.all()
+            occupied = False
+            for lec in lectures:
+                if lec.room == room_id and lec.start_time == time_occupied and lec.day == day:
+                    occupied = True
+            if occupied==False:
+                unit = form.cleaned_data.get('unit')
+                department = form.cleaned_data.get('department')
+                lecturer = form.cleaned_data.get('lecturer')
+                duration = form.cleaned_data.get('duration')
+                if duration>3 or duration<1:
+                    messages.error(request, 'Lectures cannot be more that three hours')
+                else:
+                    form.save()    
+                    if duration==2:
+                        Lecture.objects.create(unit=unit, lecturer=lecturer, department=department, room=room_id, day=day, start_time=time_occupied.replace(hour=time_occupied.hour+1) ,duration=1)
+                        
+                    elif duration>2 and duration<4:
+                        Lecture.objects.create(unit=unit, lecturer=lecturer, department=department, room=room_id, day=day, start_time=time_occupied.replace(hour=time_occupied.hour+1) ,duration=1)
+                        Lecture.objects.create(unit=unit, lecturer=lecturer, department=department, room=room_id, day=day, start_time=time_occupied.replace(hour=time_occupied.hour+2) ,duration=1)
+                    messages.success(request, 'Lecture added successfuly')
+                return redirect('../Lecture/master')
+            else:
+                messages.error(request, 'Room is occupied at that time')
         else:
-            messages.error(request, 'Room is occupied at that time')
-    else:
-        messages.error(request, 'An error occured')
+            messages.error(request, 'An error occured')
     context = {
         'form': form,
     }
