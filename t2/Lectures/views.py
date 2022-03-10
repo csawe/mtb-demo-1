@@ -75,6 +75,27 @@ def lecture_list_view(request):
     }
     return render(request, 'Lectures/lecture_master_timetable.html', context)
 
+def room_detail_view(request):
+    rooms = Room.objects.all()
+    lectures = Lecture.objects.all()
+    context = {
+        'lectures':lectures,
+        'rooms':rooms,
+        'time' : timestamps,
+        'days' : days
+    }
+    if request.method == "POST":
+        print(request)
+        r = request.POST.get('dy',None)
+        if r:
+            print(r)
+            r_id = Room.objects.get(room_id=r)
+            context['rid'] = r_id
+        else:
+            print("No room chosen")
+    
+    return render(request, 'Lectures/master_timetable.html', context)    
+
 def lecture_student_view(request):
     rooms = Room.objects.all()
     lectures = Lecture.objects.all()

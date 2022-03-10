@@ -17,13 +17,13 @@ Master timetable
                     {% endfor %}
                 </tr>
                 {% for d in days %}
-                <tr>
+                <tr height=35px>
                     <th style="width:100px; height:20px">{{d.d}}</td>
                     {% for t in time%}
                         <td style="text-align:center; width:100px; height:20px">
                             {% for l in lectures %}
                                 {% if t.time == l.start_time and l.room.room_id == r.room_id and l.day == d.d %}               
-                                    {{l.department.name}}{{l.department.year}}<br>{{l.unit.unit_name}}<br>{{l.room.room_id}} 
+                                    {{l.department.name}}{{l.department.year}}<br>{{l.unit.unit_name}}<br>{{l.room.room_id}}
                                 {% endif %}
                             {% endfor %}
                         </td>

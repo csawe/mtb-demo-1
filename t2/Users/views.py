@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.views.generic import UpdateView
 
 
-from .forms import NewUserForm
+from .forms import NewUserForm, UpdateUserForm
 from .models import NewUser
 
 # Create your views here.
@@ -16,14 +16,16 @@ def home(request):
 def user_registration_view(request):
     form = NewUserForm(request.POST or None)
     if form.is_valid():
+        print("In here")
         form.save()
+        print("Still here")
         username = form.cleaned_data.get('username')
         user = NewUser.objects.get(username=username)
         user.is_active = True
         user.save()
         messages.success(request, 'Registration Successfull')
         return redirect('../../')
-    
+
     context = {
         'form' : form,
     }
@@ -46,7 +48,7 @@ def user_login_view(request):
             else:
                 messages.error(request, "Invalid username or password")
         else:
-            messages.error(request, 'Form is invalid')
+            messages.error(request, 'Enter valid details')
     form = AuthenticationForm()
     context = {
         'form':form,
@@ -60,7 +62,7 @@ def user_logout_view(request):
 
 class UserUpdateView(UpdateView):
     template_name = 'Users/user_update.html'
-    form_class = NewUserForm
+    form_class = UpdateUserForm
     
     def get_object(self):
         id = self.kwargs.get("id")

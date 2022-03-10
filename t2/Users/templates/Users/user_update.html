@@ -4,13 +4,18 @@
 Update Login details
 {% endblock title %}
 
-{% block content %}
+{% load crispy_forms_tags %}
 
-    <form method='POST'>
+{% block content %}
+    
+    <form method='POST' style="margin: 10px auto; opacity:.8; border-radius: 8px; padding: 10px; background: #f4f7f8; max-width: 500px;">
+        <br>
+        <h3>Edit your details</h3>
+        <br><br>
         {% csrf_token %}
-        {{ form.as_p }} 
-        <input type='submit' value='Save'>
-        <a href='../../'><button type='button' value='save'>Cancel</button></a>
+        {{ form|crispy }} 
+        <input type='submit' value='Save' class='btn btn-primary' style="margin-right: auto; margin-left:10%; color: black; background-color: rgb(48, 187, 241); font-size: 12px; border-radius: 8px; padding: 6px 12px; ">
+        <a href='../../'><button type='button' value='save'class='btn btn-primary' style="margin-right: auto; margin-left:10%; color: black; background-color: rgb(48, 187, 241); font-size: 12px; border-radius: 8px; padding: 6px 12px; ">Cancel</button></a>
     </form>
 
 {% endblock content %}

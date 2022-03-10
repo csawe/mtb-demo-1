@@ -1,0 +1,110 @@
+.button {
+    background-color: #4CAF50; 
+    border: none;
+    border-radius: 8px;
+    color: white;
+    padding: 12px 24px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 10px;
+    transition-duration: 0.5s;
+    cursor: pointer;
+    width: 100px;
+    font-family:Arial, Helvetica, sans-serif;
+    position: center;
+  }
+  
+  .button1 {
+    background-color: rgb(48, 187, 241); 
+    color: black;
+  }
+  
+  .button1:hover {
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+    background-color: rgb(60, 110, 247);
+    color: rgb(247, 243, 243);
+  }
+ .form-style1{
+   opacity: 0.98;
+	max-width: 500px;
+	padding: 20px 20px;
+	background: #f4f7f8;
+	margin: 10px auto;
+	padding: 10px;
+	background: #e4f3f8;
+	border-radius: 8px;
+	font-family: Georgia, "Times New Roman", Times, serif;
+}
+.form-style1 label {
+	display: block;
+	margin-bottom: 8px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.form-style1 legend {
+	font-size: 1.4em;
+  text-align: center;
+	margin-bottom: 10px;
+}
+input[type=text],input[type=password],input[type=email] ,select{
+  font-family: Georgia, "Times New Roman", Times, serif;
+	border:1px solid #acafac;
+	border-radius: 4px;
+	font-size: 15px;
+	margin: 8px 0px;
+	outline: 0;
+	padding: 10px;
+	width: 100%;
+	box-sizing: border-box; 
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box; 
+	background-color: #e8eeef;
+	color:rgb(138, 151, 160);
+	-webkit-box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
+	box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
+	margin-bottom: 30px;
+}
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: rgb(138,151,160);
+  opacity: 0.8;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: rgb(0, 0, 0);
+  text-align: center;
+  padding: 16px 16px;
+  text-decoration: none;
+}
+
+li a:hover {
+  background-color: rgb(60, 110, 247);
+  transition-duration: 0.5s;
+  cursor: pointer;
+}
+body{
+  background-image: url("C:/Users/roymu/Documents/HTML project/Rmaster.jpg");
+background-repeat: no-repeat;
+background-position: center;
+background-size: cover;
+}
+footer{
+  border-style: none;
+  color: rgb(0, 0, 0);
+  text-align: center;
+  text-size-adjust: 20px;
+  font-size:large;
+}
+p{
+    font-style: bold;
+    font-size:medium;
+}

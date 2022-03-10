@@ -7,9 +7,13 @@ Student timetable
 {% block content %}
 
     {% if user.is_authenticated %}
-        <p>Hello {{user.username}} belongs to {{user.department}}</p>
+        <p style="margin: 10px auto; opacity:.8; border-radius: 8px; padding: 10px; background: #f4f7f8; max-width: 500px;">
+            Hello {{user.username}} 
+            <br>
+            Your department is {{user.department}}
+        </p>
         <p>
-            <h4>Your timetable is </h4>
+            <h4 margin-left='5%'>View Your daily timetable</h4>
             <table border="1">
                 <tr>
                     <th style="width:100px; height:20px">Time</th>
@@ -18,7 +22,7 @@ Student timetable
                     {% endfor %}
                 </tr>
                 {% for d in days %}
-                <tr>
+                <tr height="35px">
                     <th style="width:100px; height:20px">{{d.d}}</td>
                     {% for t in time %}
                         <td style="text-align:center; width:100px; height:20px">

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+    <header>
+        <link rel="stylesheet" type="css" href="C:\Users\roymu\Documents\HTML project\index1.css.">
+        Welcome 
+    </header>
+    <body>
+        <style>.studTT {
+            padding: 0;
+            margin: auto;
+            border-collapse: collapse;
+            width: 80%;
+            text-align: center;
+            color: whitesmoke;
+            }
+            .studTTheadrow {
+            color: darkorange;
+            font-weight: bold;
+            height: 50px;
+            }
+            .studTTbodyrow:nth-child(odd){background-color: rgba(128, 128, 128, 0.050);}
+            #latestUserScore {
+            background-color: crimson;
+            }
+            .stusTTbodyrow:hover{
+            background-color: darkorange;
+            }
+            .studTT tr td {
+            height: 25px;}
+        </style>
+        <div class="Studenttimetable" style="display: block">
+        <table class="studTT">
+            <thead class="studTThead">
+                <tr class="studTTheadrow">
+                    <th>Time</th>
+                    <th>7AM</th>
+                    <th>8AM</th>
+                    <th>9AM</th>
+                    <th>10AM</th>
+                    <th>11AM</th>
+                    <th>12PM</th>
+                    <th>1PM</th>
+                    <th>2PM</th>
+                    <th>3PM</th>
+                    <th>4PM</th>
+                    <th>5PM</th>
+                </tr>
+            </thead>
+            <tbody class="studTTbody"></tbody>
+        </table>
+        </div>
+      <script>
+        const timetable = document.querySelector("div.Studenttimetable")//finds the Student timetable in our html
+        let tableheaders=["Time","7AM","8AM","9AM","10AM","11AM","12PM","1PM","2PM","3PM","4PM","5PM"]
+         const createTT = () =>{
+             while(timetable.firstChild) timetable.removeChild(timetable.firstChild)//removes all children from timetable div if there is any
+             let studTT = document.createElement('table')//creates the table
+             studTT.className='studTT'
+             let studTThead = document.createElement('thead')//creates the table header group element
+             studTThead.className='studTThead'
+             let studTTheadrow = document.createElement('tr')//creates the row that will contain the headers
+             studTTheadrow.className='studTTheadrow'
+             //will iterate over all the strings in the tableHeader array and will append the header cells to the table header row
+             tableheaders.forEach(header=>{
+                 let TTheader = document.createElement('th')//creates the current header cell during a specific iteration
+                 TTheader.innerText = header
+                 studdTTheadrow.append(TTheader)//appends the header cell to the header row
+                })
+                studTThead.append(studTTheadrow)//appends the header row to the table header group element
+                studTT.append(studTThead)
+
+                let studTTbody = document.createElement('tbody')//creates the table body group element
+                studTTbody.className = "studTT-body"
+                studTT.append(studTTbody)//Appends the table body group element to the table
+
+                timetable.append(studTT)//appends the table to the scoreboard div
+            }
+        //function below will accept a single data in the timetable and its index to create the date
+        const appendTimetable = (singleTT, singleTTindex) =>{
+            const studTT = document.querySelector('.studTT')//Find the table we created
+
+            let studTTbodyrow = document.createElement('tr')//create the table row
+            studTTbodyrow.className = 'studTTbodyrow'
+
+            //create the 5 column cells that will the appended to the current table row
+            let dates = document.createElement('td')
+            dates.innerText = singleTTindex
+
+            let time1 = document.createElement('td')
+            time1.innerText = singleTT.time1.eightam
+
+            let time2 = document.createElement('td')
+            time2.innerText = singleTT.time1.nineam
+
+            let time3 = document.createElement('td')
+            time3.innerText = singleTT.time1.tenam
+
+            let time4 = document.createElement('td')
+            time4.innerText = singleTT.time1.elevenam
+
+            let time5 = document.createElement('td')
+            time5.innerText = singleTT.time1.twelvepm
+
+            let time6 = document.createElement('td')
+            time6.innerText = singleTT.time1.onepm
+
+            let time7 = document.createElement('td')
+            time7.innerText = singleTT.time1.twopm
+
+            let time8 = document.createElement('td')
+            time8.innerText = singleTT.time1.threepm
+
+            let time9 = document.createElement('td')
+            time9.innerText = singleTT.time1.fourpm
+
+            let time0 = document.createElement('td')
+            time0.innerText = singleTT.time1.fivepm
+            
+            studTTbodyrow.append(time,eightam,nineam,tenam,elevenam,twelvepm,onepm,twopm,threepm,fourpm,fivepm)//append all cells to the table row
+
+            studTT.append(studTTbodyrow)
+        }
+            const getTTdata =() =>{
+                fetch:'http://localhost/phpmyadmin/index.php?route=%2Ftable%2Fstructure&db=studtt&table=timetable&server=1#')//fetch all classes .the response is an array of objects that is sorted in descending order
+                .then(scores => {
+             createScoreboardTable() // Clears scoreboard div if it has any children nodes, creates & appends the table
+             // Iterates through all the objects in the scores array and appends each one to the table body
+              for (const score of scores) {
+               let scoreIndex = scores.indexOf(score) + 1 // Index of score in score array for global ranking (these are already sorted in the back-end)
+              appendScores(score, scoreIndex) // Creates and appends each row to the table body
+              }                      
+                    
+
+            }
+            }
+      </script>
+    </body>
+</html>

@@ -10,8 +10,11 @@
     
     <title>{% block title %}{% endblock title %}</title>
     {% include 'navbar.html' %}
+    {% load static %}
+</style>
 </head>
-<body>
+<body id="bg" style="background-image: url('{% static "/images/Rmaster.jpg"%}'); background-position: center; background-repeat: no-repeat; background-attachment: fixed; background-size: 100%;"> 
+    <div style="padding-left:25%; padding-right:25%">
     {% if messages %}
         {% for message in messages %}
             <div class="alert {{ message.tags }} alert-dismissible shadow fade show" role="alert">
@@ -22,6 +25,7 @@
             </div>
         {% endfor %}
     {% endif %}
+    </div>
     {% block content %}{% endblock content %}
 </body>
 </html>

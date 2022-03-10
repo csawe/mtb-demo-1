@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+    <title>Login</title>
+    <head>
+      <link rel="stylesheet" href="C:\Users\roymu\Documents\HTML project\Loginpage.css">
+      <ul>
+        <li><a href="C:\Users\roymu\Documents\HTML project\homepage1.html">Home</a></li>
+        <li style="float:right"><a class="active" href="#about">About</a></li>
+      </ul>
+    </head>
+    <body>
+      <div class="form-style1">
+   <form name="form1" action="/action_page.php" id="form1" method="post">
+    <legend>Master Timetable Login</legend>
+    <label><p> Username:<br></p></label> 
+     <input type="text" name="text1" placeholder="Username..."><br>
+     <label><p>Password:<br></p></label>
+     <input type="password" name="password" placeholder="Password..."><br>
+    <label><p>User:<br></label>
+       <select name="User" id="user">
+         <option value="Student">Student</option>
+         <option value="Admin">Admin</option>
+         <option value="Lecturer">Lecturer</option>
+       </select>
+     </p>
+       <button class="button button1" formtarget="C:/Users/roymu/Documents/HTML project/homepage1.html" value="login" onClick=loginfunction()>Login</button>
+       <button class="button button2" formtarget="C:/Users/roymu/Documents/HTML project/CreateAcc.html" value="Signup" onclick=signupfunction() >Signup</button>
+   </form>
+ </div>
+      <script>
+        function signupfunction(){
+          window.location.href="C:/Users/roymu/Documents/HTML project/CreateAcc.html";
+        }
+        function loginfunction(){
+          let x = document.forms["form1"]["text1"].value;
+          let y = document.forms["form1"]["password"].value;
+            if (x == "") {
+            alert("username must be filled");
+            return window.location.href="C:/Users/roymu/Documents/HTML project/LoginPage.html"
+            }
+            else if(y == ""){
+            alert("password must be filled");
+            return window.location.href="C:/Users/roymu/Documents/HTML project/LoginPage.html"
+        }
+          return window.location.href="C:/Users/roymu/Documents/HTML project/homepage1.html";
+
+        
+      }
+     
+      </script>
+    </body>
+    <footer id="About">
+ About this site
+<div class="div div1">
+Master timetable to be used by students and lecturers of Dedan Kimathi Uiversity of science and Technology
+</div>
+    </footer>
+</html>

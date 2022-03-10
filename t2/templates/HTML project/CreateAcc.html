@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="C:\Users\roymu\Documents\HTML project\createacc.css">
+    <head>
+    <ul>
+        <li><a href="C:\Users\roymu\Documents\HTML project\HomePage.html">Home</a></li>
+        <li style="float:right"><a class="active" href="C:\Users\roymu\Documents\HTML project\LoginPage.html">Login</a></li> 
+    </ul>
+    </head>
+    <body><div class="form-style1">
+        <form name="form1" method="post">
+            <legend>
+                <div>
+                    <h1>Welcome to Master Timetable</h1>
+                    <div><h2>Create account</h2></div>
+                </div>
+            </legend>
+           <label><p>Username<br></p></label> 
+            <input type="text" name ="Username" placeholder="Username..."><br>
+            <label><p>Email Adress<br></p></label>
+            <input type="email" name="Email Address" placeholder="Email address..."><br>
+            <label><p>User:<br></p></label>
+            <select name="user" id="user">
+                <option value="Student">Student</option>
+                <option value="Lecturer">Lecturer</option>
+                <option value="Admin">Admin</option>
+              </select>
+            <label><p> Create Password<br></p></label>
+            <input type="password" name="password1" placeholder="Create password..."><br>
+            <label><p>Verify Password<br></p></label>
+            <input type="password" name="password" placeholder="Verify password..."><br>
+            <button class="button button1" formtarget="C:/Users/roymu/Documents/HTML project/LoginPage.html" value="createacc" onClick=createfunction()>Create Account</button>
+        </form>
+    </div>
+        <script>
+            function createfunction(){
+          let x = document.forms["form1"]["username"].value;
+          let y = document.forms["form1"]["password1"].value;
+          let a = document.forms["form1"]["Email Address"].value;
+          let b = document.forms["form1"]["password"].value;
+            if (x == "") {
+            alert("username must be filled");
+            return window.location.href="C:/Users/roymu/Documents/HTML project/CreateAcc.html"
+            }
+            else if(y == ""){
+            alert("Create Password");
+            return window.location.href="C:/Users/roymu/Documents/HTML project/CreateAcc.html"
+            }
+            else if (a == "") {
+            alert("Enter email Address");
+            return window.location.href="C:/Users/roymu/Documents/HTML project/CreateAcc.html"
+            }
+            else if(b == ""){
+            alert("Verify password");
+            return window.location.href="C:/Users/roymu/Documents/HTML project/CreateAcc.html"
+            }
+            return window.location.href="C:/Users/roymu/Documents/HTML project/LoginPage.html"
+            
+            }
+        </script>
+    </body>
+    <footer id="About">
+        About this site
+       <div class="div div1">
+       Master timetable to be used by students and lecturers of Dedan Kimathi Uiversity of science and Technology
+       </div>
+           </footer>
+</html>

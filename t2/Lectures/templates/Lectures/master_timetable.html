@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Master timetable
+{% endblock title %}
+
+{% block content %}
+
+    <form method="POST" id="free-room" style="margin: 10px auto; opacity:.8; border-radius: 8px; padding: 10px; background: #f4f7f8; max-width: 500px;">
+        {% csrf_token %}
+        <label for="dy">Enter Day</label>
+        <select name="dy" id="dy" form="free-room">
+                {% for room in rooms %}
+                    <option value ="{{room.room_id}}">{{room.room_id}}</option>
+                {% endfor %}
+        </select>
+        <br>
+        <input type="submit" name="Check for free rooms">
+    </form>
+    <br><br>
+
+    <h2 style="margin: 10px auto; padding-left:5%">{{rid.room_id| title}}</h2>
+    <table border="1">
+        <tr>
+            <th style="width:100px; height:20px">Time</th>
+            {% for t in time %}
+                <th style="width:100px; height:20px"> {{ t.time}} </th>
+            {% endfor %}
+        </tr>
+        {% for d in days %}
+        <tr height=35px>
+            <th style="width:100px; height:20px">{{d.d}}</td>
+            {% for t in time%}
+                <td style="text-align:center; width:100px; height:20px">
+                    {% for l in lectures %}
+                        {% if t.time == l.start_time and l.room.room_id == rid.room_id and l.day == d.d %}               
+                            {{l.department.name}}{{l.department.year}}<br>{{l.unit.unit_name}}<br>{{l.room.room_id}}
+                        {% endif %}
+                    {% endfor %}
+                </td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </table>
+    <br>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <a href='../create'><button class="btn btn-primary" style="margin-right: auto; margin-left:10%; color: black; background-color: rgb(48, 187, 241); font-size: 12px; border-radius: 8px; padding: 6px 12px; ">Book a room</button></a>
+        </div>        
+    </div>
+
+
+{% endblock content %}

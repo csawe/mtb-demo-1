@@ -4,7 +4,8 @@
 
 {% block content %}
 
-    <div class='list-group'>
+    <div>
+        <br>
         <table>
             <tr>
                 <th style="width:100px; height:20px">Room id</th>
@@ -16,27 +17,32 @@
                     <td style="width:100px; height:20px">{{room.room_id}}</td>
                     <td style="width:100px; height:20px">{{room.room_location}}</td>
                     <td style="width:100px; height:20px">{{room.room_carrying_capacity}}</td>
-                    <td style="width:10px">
-                        <form action='' method="POST" id='unitform'>
-                            {% csrf_token %}
-                            <button class="btn btn-success" name='upd_id' type='submit' value='{{room.id}}' form='unitform'>Edit</button>
-                        </form>
-                    </td>
-                    <td>
-                        <form action='' method="POST" id='unitform'>
-                            {% csrf_token %}
-                            <button class="btn btn-fail" name='del_id' type='submit' value='{{room.id}}' form='unitform'>Delete</button>
-                        </form>
-                    </td>
+                    {% if user.group == "admin" %}
+                        <td style="width:10px">
+                            <form action='' method="POST" id='unitform'>
+                                {% csrf_token %}
+                                <button class="btn btn-success" name='upd_id' type='submit' value='{{room.id}}' form='unitform'class='btn btn-primary' style="margin-right: auto; margin-left:10%; color: black; background-color: rgb(48, 187, 241); font-size: 12px; border-radius: 8px; padding: 6px 12px;">Edit</button>
+                            </form>
+                        </td>
+                        <td>
+                            <form action='' method="POST" id='unitform'>
+                                {% csrf_token %}
+                                <button class="btn btn-fail" name='del_id' type='submit' value='{{room.id}}' form='unitform' class='btn btn-primary' style="margin-right: auto; margin-left:10%; color: black; background-color: rgb(48, 187, 241); font-size: 12px; border-radius: 8px; padding: 6px 12px;">Delete</button>
+                            </form>
+                        </td>
+                    {% endif %}
                 </tr>            
             {% endfor %}
         </table>
     </div>
-    <div class="input-group mb-3">
-        <div class="input-group-prepend">
-            <a href='../Room/create'><button class="btn btn-success">Add New Room</button></a>
-        </div>        
-    </div>
+    {% if user.group == "admin" %}
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <a href='../Room/create'><button class="btn btn-success" class='btn btn-primary' style="margin-right: auto; margin-left:10%; color: black; background-color: rgb(48, 187, 241); font-size: 12px; border-radius: 8px; padding: 6px 6px;">Add New Room</button></a>
+            </div>        
+        </div>
+    {% endif %}
+    
 
 
     <br><br>
@@ -45,7 +51,7 @@
             <h4>
                 Check available rooms
             </h4>
-            <form method="POST" id="free-room">
+            <form method="POST" id="free-room" style="margin: 10px auto; opacity:.8; border-radius: 8px; padding: 10px; background: #f4f7f8; max-width: 500px;">
                 {% csrf_token %}
                 <label for="dy">Enter Day</label>
                 <select name="dy" id="dy" form="free-room">
@@ -62,7 +68,7 @@
                 <input type="submit" name="Check for free rooms">
             </form>
         </p>
-            <table>
+            <table style="margin: 10px auto; opacity:.8; border-radius: 8px; padding: 10px; background: #f4f7f8; max-width: 500px;">
                 <tr>
                     <th style="width:100px; height:20px">Room id</th>
                     <th style="width:100px; height:20px">Room Location</th>
@@ -73,7 +79,9 @@
                         <td style="width:100px; height:20px">{{room.room_id}}</td>
                         <td style="width:100px; height:20px">{{room.room_location}}</td>
                         <td style="width:100px; height:20px">{{room.room_carrying_capacity}}</td>
-                        <td style="width:100px; height:20px"> <a href="../../Lecture/create">Book</a> </td>
+                        {% if user.group == "lecturer" %}
+                            <td style="width:100px; height:20px"> <a href="../../Lecture/create">Book</a> </td>
+                        {% endif %}
                     </tr>            
                 {% endfor %}
             </table>

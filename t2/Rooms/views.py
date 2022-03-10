@@ -13,12 +13,13 @@ from .forms import RoomModelForm
 
 def room_create_view(request):
     form = RoomModelForm(request.POST or None)
-    if form.is_valid():
-        form.save()
-        messages.success(request, 'New room added')
-        return redirect('../')
-    else:
-        messages.error(request, 'An error has occured')
+    if request.method == "POST":
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'New room added')
+            return redirect('../')
+        else:
+            messages.error(request, 'Enter valid details')
         
     context = {
         'form' : form,
@@ -51,12 +52,16 @@ def room_list_view(request):
             lectures = Lecture.objects.filter(day=dy)
             for room in Rooms:
                 occupied = False
+                print("Checking room: ",room.room_id)
                 for lec in lectures:
-                    if lec.start_time == tm:
+                    if lec.start_time == tm and room.room_id == lec.room.room_id:
                         occupied = True
                         break
                 if not occupied:
+                    print(room.room_id,"is not occupied")
                     free_rooms.append(room)
+                else:
+                    print(room.room_id,"is occupied")
             context['freerooms'] = free_rooms
     return render(request, 'Rooms/room_list.html', context)
 
