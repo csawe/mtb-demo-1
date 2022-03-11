@@ -7,4 +7,4 @@ class Department(models.Model):
     year = models.CharField(max_length=3)
     
     def __str__(self):
-        return self.name
+        return self.name+self.year

@@ -8,11 +8,16 @@ Update room
 
 {% block content %}
 
+<p>
+    <br>
     <form method='POST' style="margin: 10px auto; opacity:.8; border-radius: 8px; padding: 10px; background: #f4f7f8; max-width: 500px;">
+        <h3>Update Room details</h3>
         {% csrf_token %}
-        {{ form.as_p }} 
+        {{ form|crispy }}
+        <br> 
         <input type='submit' value='Save' class='btn btn-primary' style="margin-right: auto; margin-left:10%; color: black; background-color: rgb(48, 187, 241); font-size: 12px; border-radius: 8px; padding: 6px 12px;">
         <a href='../'><button type='button' value='save' class='btn btn-primary' style="margin-right: auto; margin-left:10%; color: black; background-color: rgb(48, 187, 241); font-size: 12px; border-radius: 8px; padding: 6px 12px;">Cancel</button></a>
     </form>
+</p>
 
 {% endblock content %}

@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import lecture_list_view, lecture_create_view, LectureUpdateView, lecture_student_view, room_detail_view
+from .views import lecture_create_view, LectureUpdateView, lecture_student_view, room_detail_view #,lecture_list_view
 
 app_name = 'Lectures'
 

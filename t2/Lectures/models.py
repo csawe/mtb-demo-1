@@ -1,5 +1,6 @@
+from datetime import datetime
+
 from django.db import models
-from django import forms
 
 from Units.models import Unit
 from Users.models import NewUser
@@ -14,6 +15,12 @@ DAYS_OF_WEEK = (
     ('thursday', 'Thursday'),
     ('friday', 'Friday'),
 )
+REASONS = (
+    ('lecture','Normal lecture'),
+    ('CAT','I want to hold a cat in the room'),
+    ('Private class meeting','I want to hold a private meeting in the selected room'),
+    ('Group Discussion', 'I want to hold a group study session in the selected room'),
+)
 
 lecturers = NewUser.objects.filter(group='lecturer')
 
@@ -26,3 +33,5 @@ class Lecture(models.Model):
     day = models.CharField(max_length=10, choices=DAYS_OF_WEEK)
     start_time = models.TimeField()
     duration = models.IntegerField()
+    reason = models.CharField(max_length=30, choices=REASONS)
+    dateCreated = models.DateTimeField(default=datetime.now())

@@ -1,6 +1,8 @@
+from msilib.schema import Error
 from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib import messages
 from django.views.generic import UpdateView
+from mysqlx import IntegrityError
 from .models import Unit
 from .forms import UnitModelForm
 
@@ -9,12 +11,13 @@ from .forms import UnitModelForm
 
 def unit_create_view(request):
     form = UnitModelForm(request.POST or None)
-    if form.is_valid():
-        form.save()
-        messages.success(request, 'New unit created')
-        return redirect('../')
-    else:
-        messages.error(request, 'An error has occured')
+    if request.method == "POST":
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'New unit created')
+            return redirect('../')
+        else:
+            messages.error(request, 'An error has occured')
         
     context = {
         'form' : form,
@@ -29,8 +32,14 @@ def unit_list_view(request):
         update_num = request.POST.get('upd_id', None)
         if delete_num:
             obj = Unit.objects.get(id=delete_num)
-            obj.delete()
-            messages.success(request, 'Deleted Unit')
+            try:
+                obj.delete()
+                messages.success(request, 'Deleted Unit')
+            except:
+                if IntegrityError:
+                    messages.error(request, "Unit has students enroled.")
+                else:
+                    messages.error(request, "Cannot delete unit.")
         elif update_num:
             obj = Unit.objects.get(id=update_num)
             return redirect(f'../Unit/update/{obj.id}')

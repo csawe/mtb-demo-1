@@ -1,17 +1,30 @@
-from datetime import time
+from datetime import time, datetime
 
 from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib import messages
 from django.views.generic import UpdateView
-from pyparsing import one_of
-from Departments.models import Department
 
 from Lectures.models import Lecture
-from Rooms.models import Room, Time
+from Rooms.models import Room
 
 from .form import LectureModelForm
 
 # Create your views here.
+
+def update_lectures():
+    print("Checking...")
+    lectures = Lecture.objects.all()
+    now = datetime.now()
+    for lecture in lectures:
+        if lecture.reason != "lecture":
+            check = lecture.dateCreated.replace(hour = lecture.dateCreated.hour+ lecture.duration)
+            print(now.timestamp())
+            print(check.timestamp() )
+            if now.timestamp() > check.timestamp():
+                Lecture.objects.delete(id=lecture.id)
+            ##Edit check and enable deleting.
+                
+update_lectures()       
 
 def lecture_create_view(request):
     form = LectureModelForm(request.POST or None)
@@ -35,8 +48,7 @@ def lecture_create_view(request):
                 else:
                     form.save()    
                     if duration==2:
-                        Lecture.objects.create(unit=unit, lecturer=lecturer, department=department, room=room_id, day=day, start_time=time_occupied.replace(hour=time_occupied.hour+1) ,duration=1)
-                        
+                        Lecture.objects.create(unit=unit, lecturer=lecturer, department=department, room=room_id, day=day, start_time=time_occupied.replace(hour=time_occupied.hour+1) ,duration=1)    
                     elif duration>2 and duration<4:
                         Lecture.objects.create(unit=unit, lecturer=lecturer, department=department, room=room_id, day=day, start_time=time_occupied.replace(hour=time_occupied.hour+1) ,duration=1)
                         Lecture.objects.create(unit=unit, lecturer=lecturer, department=department, room=room_id, day=day, start_time=time_occupied.replace(hour=time_occupied.hour+2) ,duration=1)
@@ -62,8 +74,9 @@ class day():
         self.d = d
 days = [day('monday'), day('tuesday'),day('wednesday'), day('thursday'), day('friday')]
 
+groups = ['student','lecturer']
 
-
+'''
 def lecture_list_view(request):
     rooms = Room.objects.all()
     lectures = Lecture.objects.all()
@@ -74,6 +87,8 @@ def lecture_list_view(request):
         'days' : days,
     }
     return render(request, 'Lectures/lecture_master_timetable.html', context)
+'''
+
 
 def room_detail_view(request):
     rooms = Room.objects.all()
@@ -85,10 +100,8 @@ def room_detail_view(request):
         'days' : days
     }
     if request.method == "POST":
-        print(request)
         r = request.POST.get('dy',None)
         if r:
-            print(r)
             r_id = Room.objects.get(room_id=r)
             context['rid'] = r_id
         else:
@@ -104,6 +117,7 @@ def lecture_student_view(request):
         'days':days,
         'rooms':rooms,
         'lectures':lectures,
+        'groups':groups,
     }
     return render(request, 'Lectures/lecture_student_timetable.html', context)
 

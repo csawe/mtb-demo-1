@@ -17,8 +17,7 @@ Master timetable
         <br>
         <input type="submit" name="Check for free rooms">
     </form>
-    <br><br>
-
+    <br>
     <h2 style="margin: 10px auto; padding-left:5%">{{rid.room_id| title}}</h2>
     <table border="1">
         <tr>
@@ -33,8 +32,8 @@ Master timetable
             {% for t in time%}
                 <td style="text-align:center; width:100px; height:20px">
                     {% for l in lectures %}
-                        {% if t.time == l.start_time and l.room.room_id == rid.room_id and l.day == d.d %}               
-                            {{l.department.name}}{{l.department.year}}<br>{{l.unit.unit_name}}<br>{{l.room.room_id}}
+                        {% if t.time == l.start_time and l.room.room_id == rid.room_id and l.day == d.d %}  
+                            {{l.department.name}}<br>{{l.unit.unit_name}}<br>{{l.room.room_id}}            
                         {% endif %}
                     {% endfor %}
                 </td>
@@ -43,11 +42,14 @@ Master timetable
         {% endfor %}
     </table>
     <br>
-    <div class="input-group mb-3">
-        <div class="input-group-prepend">
-            <a href='../create'><button class="btn btn-primary" style="margin-right: auto; margin-left:10%; color: black; background-color: rgb(48, 187, 241); font-size: 12px; border-radius: 8px; padding: 6px 12px; ">Book a room</button></a>
-        </div>        
-    </div>
+    {% if user.group ==  "lecturer" or user.is_staff %}
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <a href='../create'><button class="btn btn-primary" style="margin-right: auto; margin-left:10%; color: black; background-color: rgb(48, 187, 241); font-size: 12px; border-radius: 8px; padding: 6px 12px;">Book a room</button></a>
+            </div>        
+        </div>
+    {% endif %}
+    
 
 
 {% endblock content %}

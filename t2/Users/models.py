@@ -23,7 +23,7 @@ class CustomAccountManager(BaseUserManager):
 GROUP = (
     ('student','Student'),
     ('lecturer','Lecturer'),
-    ('admin', 'Admin'),
+    #('admin', 'Admin'),
 )
 
 class NewUser(AbstractBaseUser, PermissionsMixin):

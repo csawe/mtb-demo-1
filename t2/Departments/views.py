@@ -1,4 +1,6 @@
 from datetime import datetime
+from mysqlx import IntegrityError
+from msilib.schema import Error
 
 from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib import messages
@@ -41,8 +43,15 @@ def department_list_view(request):
         upd_num = request.POST.get('update_id', None)
         if del_num:
             obj = Department.objects.get(id=del_num)
-            obj.delete()
-            messages.success(request, 'Deleted department')
+            try:
+                obj.delete()
+                messages.success(request, 'Deleted department')
+            except:
+                if IntegrityError:
+                    messages.error(request, "Department has users.")
+                else:
+                    messages.error(request, "Cannot delete department.")
+            
         elif upd_num:
             obj = Department.objects.get(id=upd_num)
             return redirect(f'../Department/update/{obj.id}')

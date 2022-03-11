@@ -1,4 +1,6 @@
 from datetime import time
+from mysqlx import IntegrityError
+from msilib.schema import Error
 
 from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib import messages
@@ -40,8 +42,15 @@ def room_list_view(request):
         if delete_num:
             print(delete_num)
             obj = Room.objects.get(id=delete_num)
-            obj.delete()
-            messages.success(request, 'Deleted ROom')
+            try:
+                obj.delete()
+                messages.success(request, 'Deleted Room')
+            except:
+                if IntegrityError:
+                    messages.error(request, "Room has lectures.")
+                else:
+                    messages.error(request, "Cannot delete room.")
+            
         elif update_num:
             print(update_num)
             obj = Room.objects.get(id=update_num)

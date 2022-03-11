@@ -11,13 +11,17 @@
                 <th style="width:100px; height:20px">Room id</th>
                 <th style="width:100px; height:20px">Room Location</th>
                 <th style="width:100px; height:20px">Room Capacity</th>
+                <th style="width:100px; height:20px">Electric sockets</th>
+                <th style="width:100px; height:20px">Ethernet ports</th>
             </tr>
             {% for room in rooms %}
                 <tr>
                     <td style="width:100px; height:20px">{{room.room_id}}</td>
                     <td style="width:100px; height:20px">{{room.room_location}}</td>
                     <td style="width:100px; height:20px">{{room.room_carrying_capacity}}</td>
-                    {% if user.group == "admin" %}
+                    <td style="width:100px; height:20px">{{room.functioning_electrical_sockets}}</td>
+                    <td style="width:100px; height:20px">{{room.ethernet_ports}}</td>
+                    {% if user.is_staff %}
                         <td style="width:10px">
                             <form action='' method="POST" id='unitform'>
                                 {% csrf_token %}
@@ -35,7 +39,7 @@
             {% endfor %}
         </table>
     </div>
-    {% if user.group == "admin" %}
+    {% if user.is_staff %}
         <div class="input-group mb-3">
             <div class="input-group-prepend">
                 <a href='../Room/create'><button class="btn btn-success" class='btn btn-primary' style="margin-right: auto; margin-left:10%; color: black; background-color: rgb(48, 187, 241); font-size: 12px; border-radius: 8px; padding: 6px 6px;">Add New Room</button></a>

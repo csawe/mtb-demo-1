@@ -17,15 +17,24 @@
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             {% if user.is_authenticated %}
-            <a class="dropdown-item" href="/Lecture">Student TT</a>
-            <a class="dropdown-item" href="/Lecture/master">Master TT</a>
-            <a class="dropdown-item" href="/Room">Rooms</a>
-            <a class="dropdown-item" href="/Department">Departments</a>
-            <a class="dropdown-item" href="/Unit">Units</a>
+              {% if user.group == "student" %}
+                <a class="dropdown-item" href="/Lecture">Student TT</a>
+              {% elif user.group == "lecturer" %}
+                <a class="dropdown-item" href="/Lecture">Lecturer TT</a>
+              {% endif %}
+              
+              <a class="dropdown-item" href="/Lecture/master">Master TT</a>
+              {% if user.group == "lecturer" or user.is_staff%}
+                <a class="dropdown-item" href="/Unit">Units</a>
+                <a class="dropdown-item" href="/Department">Departments</a>
+              {% endif %}   
+              {% if user.is_staff %}
+                <a class="dropdown-item" href="/Room">Rooms</a>
+              {% endif %}        
             {% else %}
-            <a class="dropdown-item" href="../../User/login">Kindly log in<a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item">About</a>
+              <a class="dropdown-item" href="../../User/login">Kindly log in<a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item">About</a>
             {% endif %}
           </div>
         </li>
