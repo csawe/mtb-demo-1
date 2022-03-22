@@ -11,14 +11,12 @@ Departments
             <tr>
                 <th style="width:100px; height:20px">School</th>
                 <th style="width:100px; height:20px">Name</th>
-                <th style="width:100px; height:20px">Year</th>
                 <th style="width:100px; height:20px">Current location</th>
             </tr>
             {% for department in departments %}
                 <tr>
                     <td style="width:150px; height:20px">{{department.school}}</td>
                     <td style="width:100px; height:20px">{{department.name}}</td>
-                    <td style="width:100px; height:20px">{{department.year}}</td>
                     <td style="width:100px; height:20px">
                         {% for lecture in lectures %}
                             {% if department.name == lecture.department.name %}

@@ -8,7 +8,7 @@ Master timetable
 
     <form method="POST" id="free-room" style="margin: 10px auto; opacity:.8; border-radius: 8px; padding: 10px; background: #f4f7f8; max-width: 500px;">
         {% csrf_token %}
-        <label for="dy">Enter Day</label>
+        <label for="dy">Enter Room</label>
         <select name="dy" id="dy" form="free-room">
                 {% for room in rooms %}
                     <option value ="{{room.room_id}}">{{room.room_id}}</option>

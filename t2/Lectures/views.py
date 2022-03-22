@@ -1,4 +1,5 @@
-from datetime import time, datetime
+from datetime import time, datetime, date
+import calendar
 
 from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib import messages
@@ -14,16 +15,19 @@ from .form import LectureModelForm
 def update_lectures():
     print("Checking...")
     lectures = Lecture.objects.all()
-    now = datetime.now()
+    date_today = date.today()
+    time_today = datetime.now()
     for lecture in lectures:
-        if lecture.reason != "lecture":
-            check = lecture.dateCreated.replace(hour = lecture.dateCreated.hour+ lecture.duration)
-            print(now.timestamp())
-            print(check.timestamp() )
-            if now.timestamp() > check.timestamp():
-                Lecture.objects.delete(id=lecture.id)
+        if ((lecture.day == calendar.day_name[date_today.weekday()]) and (lecture.dateCreated.date != time_today.date())) or (lecture.day != calendar.day_name[date_today.weekday()]):
+            if lecture.reason != "lecture":
+                check_time = lecture.start_time.hour + lecture.duration        
+                if lecture.day == calendar.day_name[date_today.weekday()]:
+                    if check_time >= 17:
+                        lecture.delete()
             ##Edit check and enable deleting.
-                
+            #17 is the end of the day
+            #At the end of the day each lesson is checked.    
+            
 update_lectures()       
 
 def lecture_create_view(request):
@@ -43,8 +47,11 @@ def lecture_create_view(request):
                 department = form.cleaned_data.get('department')
                 lecturer = form.cleaned_data.get('lecturer')
                 duration = form.cleaned_data.get('duration')
+                start_time = form.cleaned_data.get('start_time')
                 if duration>3 or duration<1:
                     messages.error(request, 'Lectures cannot be more that three hours')
+                elif (start_time.hour < 7) or (start_time.hour > 16):
+                    messages.error(request, 'Lecture is outside learning hours')
                 else:
                     form.save()    
                     if duration==2:
@@ -53,7 +60,7 @@ def lecture_create_view(request):
                         Lecture.objects.create(unit=unit, lecturer=lecturer, department=department, room=room_id, day=day, start_time=time_occupied.replace(hour=time_occupied.hour+1) ,duration=1)
                         Lecture.objects.create(unit=unit, lecturer=lecturer, department=department, room=room_id, day=day, start_time=time_occupied.replace(hour=time_occupied.hour+2) ,duration=1)
                     messages.success(request, 'Lecture added successfuly')
-                return redirect('../Lecture/master')
+                    return redirect('../Lecture/master')
             else:
                 messages.error(request, 'Room is occupied at that time')
         else:
@@ -72,10 +79,10 @@ timestamps = [timestamp(7), timestamp(8), timestamp(9), timestamp(10), timestamp
 class day():
     def __init__(self, d):
         self.d = d
-days = [day('monday'), day('tuesday'),day('wednesday'), day('thursday'), day('friday')]
+days = [day('Monday'), day('Tuesday'),day('Wednesday'), day('Thursday'), day('Friday')]
 
 groups = ['student','lecturer']
-
+    
 '''
 def lecture_list_view(request):
     rooms = Room.objects.all()
@@ -91,6 +98,7 @@ def lecture_list_view(request):
 
 
 def room_detail_view(request):
+    update_lectures() 
     rooms = Room.objects.all()
     lectures = Lecture.objects.all()
     context = {
@@ -110,6 +118,7 @@ def room_detail_view(request):
     return render(request, 'Lectures/master_timetable.html', context)    
 
 def lecture_student_view(request):
+    update_lectures() 
     rooms = Room.objects.all()
     lectures = Lecture.objects.all()
     context = {

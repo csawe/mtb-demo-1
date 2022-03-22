@@ -9,11 +9,11 @@ from Rooms.models import Room
 
 # Create your models here.
 DAYS_OF_WEEK = (
-    ('monday','Monday'),
-    ('tuesday','Tuesday'),
-    ('wednesday','Wednesday'),
-    ('thursday', 'Thursday'),
-    ('friday', 'Friday'),
+    ('Monday','Monday'),
+    ('Tuesday','Tuesday'),
+    ('Wednesday','Wednesday'),
+    ('Thursday', 'Thursday'),
+    ('Friday', 'Friday'),
 )
 REASONS = (
     ('lecture','Normal lecture'),

@@ -29,7 +29,7 @@ Student timetable
                             {% for l in lectures%}
                                 {% if  t.time == l.start_time and l.day == d.d %}
                                     {% if user.group == l.lecturer.group and l.lecturer.username == user.username%}
-                                        {{l.unit}}<br>{{l.department}}{{l.department.year}}<br>{{l.room.room_id}}
+                                        {{l.unit}}<br>{{l.department}}<br>{{l.room.room_id}}
                                     {% elif l.department == user.department %}
                                         {{l.unit}}<br>{{l.room}}
                                     {% endif %}

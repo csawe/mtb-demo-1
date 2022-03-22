@@ -22,14 +22,14 @@
               {% elif user.group == "lecturer" %}
                 <a class="dropdown-item" href="/Lecture">Lecturer TT</a>
               {% endif %}
-              
               <a class="dropdown-item" href="/Lecture/master">Master TT</a>
+              <a class="dropdown-item" href="/Room">Rooms</a>
               {% if user.group == "lecturer" or user.is_staff%}
                 <a class="dropdown-item" href="/Unit">Units</a>
                 <a class="dropdown-item" href="/Department">Departments</a>
               {% endif %}   
               {% if user.is_staff %}
-                <a class="dropdown-item" href="/Room">Rooms</a>
+                
               {% endif %}        
             {% else %}
               <a class="dropdown-item" href="../../User/login">Kindly log in<a>
