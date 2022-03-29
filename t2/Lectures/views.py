@@ -53,6 +53,7 @@ def lecture_create_view(request):
                 lecturer = form.cleaned_data.get('lecturer')
                 duration = form.cleaned_data.get('duration')
                 start_time = form.cleaned_data.get('start_time')
+                reason = form.cleaned_data.get('reason')
                 if duration>3 or duration<1:
                     messages.error(request, 'Lectures cannot be more that three hours')
                 elif (start_time.hour < 7) or (start_time.hour > 16):
@@ -60,10 +61,10 @@ def lecture_create_view(request):
                 else:
                     form.save()    
                     if duration==2:
-                        Lecture.objects.create(unit=unit, lecturer=lecturer, department=department, room=room_id, day=day, start_time=time_occupied.replace(hour=time_occupied.hour+1) ,duration=1)    
+                        Lecture.objects.create(unit=unit, lecturer=lecturer, department=department, room=room_id, day=day, start_time=time_occupied.replace(hour=time_occupied.hour+1) ,duration=1, reason=reason)    
                     elif duration>2 and duration<4:
-                        Lecture.objects.create(unit=unit, lecturer=lecturer, department=department, room=room_id, day=day, start_time=time_occupied.replace(hour=time_occupied.hour+1) ,duration=1)
-                        Lecture.objects.create(unit=unit, lecturer=lecturer, department=department, room=room_id, day=day, start_time=time_occupied.replace(hour=time_occupied.hour+2) ,duration=1)
+                        Lecture.objects.create(unit=unit, lecturer=lecturer, department=department, room=room_id, day=day, start_time=time_occupied.replace(hour=time_occupied.hour+1) ,duration=1, reason=reason)
+                        Lecture.objects.create(unit=unit, lecturer=lecturer, department=department, room=room_id, day=day, start_time=time_occupied.replace(hour=time_occupied.hour+2) ,duration=1, reason=reason)
                     messages.success(request, 'Lecture added successfuly')
                     return redirect('../Lecture/master')
             elif room_occupied == True:

@@ -30,9 +30,17 @@ Student timetable
                                 {% if t.time == l.start_time and l.day == d.d %}
                                     {% if l.department == user.department %}
                                         {% if user.group == "lecturer" and l.lecturer == user %}
-                                            {{l.unit}}<br>{{l.department}}<br>{{l.room}}
+                                            {% if l.reason == "lecture" %}
+                                                {{l.unit}}<br>{{l.department}}<br>{{l.room}}
+                                            {% else %}
+                                                {{ l.reason }}<br>{{l.room}}
+                                            {% endif %}
                                         {% elif user.group == "student" %}
-                                            {{l.unit}}<br>{{l.room}}
+                                            {% if l.reason == "lecture" %}
+                                                {{l.unit}}<br>{{l.department}}<br>{{l.room}}
+                                            {% else %}
+                                                {{l.reason}}<br>{{l.room}}
+                                            {% endif %}
                                         {% endif %}
                                     {% endif %}
                                 {% endif %}

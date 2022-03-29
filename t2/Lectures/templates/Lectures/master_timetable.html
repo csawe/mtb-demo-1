@@ -32,8 +32,12 @@ Master timetable
             {% for t in time%}
                 <td style="text-align:center; width:100px; height:20px">
                     {% for l in lectures %}
-                        {% if t.time == l.start_time and l.room.room_id == rid.room_id and l.day == d.d %}  
-                            {{l.department.name}}<br>{{l.unit.unit_name}}            
+                        {% if t.time == l.start_time and l.room.room_id == rid.room_id and l.day == d.d %} 
+                            {% if l.reason == "lecture" %}
+                                {{l.unit}}<br>{{l.department}}
+                            {% else %}
+                                {{l.reason}}<br>{{l.department}}
+                            {% endif %}            
                         {% endif %}
                     {% endfor %}
                 </td>
