@@ -27,13 +27,16 @@ Student timetable
                     {% for t in time %}
                         <td style="text-align:center; width:100px; height:20px">
                             {% for l in lectures%}
-                                {% if  t.time == l.start_time and l.day == d.d %}
-                                    {% if user.group == l.lecturer.group and l.lecturer.username == user.username%}
-                                        {{l.unit}}<br>{{l.department}}<br>{{l.room.room_id}}
-                                    {% elif l.department == user.department %}
-                                        {{l.unit}}<br>{{l.room}}
+                                {% if t.time == l.start_time and l.day == d.d %}
+                                    {% if l.department == user.department %}
+                                        {% if user.group == "lecturer" and l.lecturer == user %}
+                                            {{l.unit}}<br>{{l.department}}<br>{{l.room}}
+                                        {% elif user.group == "student" %}
+                                            {{l.unit}}<br>{{l.room}}
+                                        {% endif %}
                                     {% endif %}
                                 {% endif %}
+
                             {% endfor %}
                         </td>
                     {% endfor %}

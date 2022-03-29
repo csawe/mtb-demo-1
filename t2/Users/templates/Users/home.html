@@ -4,11 +4,22 @@
 
 {% block content %}
     <div style="padding-left:35%; padding-right:35%;padding-top:3%">
-    <p>Welcome to master timetable</p>
+    <h3>Welcome to master timetable</h3>
     {% if user.is_anonymous %}
         <p>Kindly <a href='/User/login'>log in</a></p>
     {% else %}
-        <p>Welcome {{user.username}} to home page</p>
+        <p>
+            <h5>Welcome {{user.username}} to the home page<h5>
+            With this system, you can perform various tasks.
+            <ul>
+                <li>View your personal timetable (Both students and lecturers)</li>
+                <li>View the master timetable</li>
+                <li>Search for free rooms</li>
+                <li>Locate departmental students</li>
+                <li>Book a room for a specified valid reason</li>
+            </ul>
+        </p>
+        <p>You can navigate through the site using the navigation bar at the top of the page</p>
     {% endif %}
     </div>
 {% endblock content %}

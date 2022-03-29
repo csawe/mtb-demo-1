@@ -18,7 +18,7 @@ Master timetable
         <input type="submit" name="Check for free rooms">
     </form>
     <br>
-    <h2 style="margin: 10px auto; padding-left:5%">{{rid.room_id| title}}</h2>
+    <h2 style="margin: 10px auto; padding-left:5%">Room: {{rid.room_id| title}}</h2>
     <table border="1">
         <tr>
             <th style="width:100px; height:20px">Time</th>
@@ -33,7 +33,7 @@ Master timetable
                 <td style="text-align:center; width:100px; height:20px">
                     {% for l in lectures %}
                         {% if t.time == l.start_time and l.room.room_id == rid.room_id and l.day == d.d %}  
-                            {{l.department.name}}<br>{{l.unit.unit_name}}<br>{{l.room.room_id}}            
+                            {{l.department.name}}<br>{{l.unit.unit_name}}            
                         {% endif %}
                     {% endfor %}
                 </td>

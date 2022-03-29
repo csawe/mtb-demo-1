@@ -37,12 +37,17 @@ def lecture_create_view(request):
             room_id = form.cleaned_data.get('room')
             time_occupied = form.cleaned_data.get('start_time')
             day = form.cleaned_data.get('day')
+            department = form.cleaned_data.get('department')
             lectures = Lecture.objects.all()
-            occupied = False
+            room_occupied = False
+            student_occupied = False
             for lec in lectures:
-                if lec.room == room_id and lec.start_time == time_occupied and lec.day == day:
-                    occupied = True
-            if occupied==False:
+                if (lec.room == room_id and lec.start_time == time_occupied and lec.day == day):
+                    room_occupied = True      
+                elif (lec.start_time == time_occupied and lec.day == day and lec.department == department):
+                    student_occupied = True 
+            
+            if room_occupied is False and student_occupied is False:
                 unit = form.cleaned_data.get('unit')
                 department = form.cleaned_data.get('department')
                 lecturer = form.cleaned_data.get('lecturer')
@@ -61,8 +66,10 @@ def lecture_create_view(request):
                         Lecture.objects.create(unit=unit, lecturer=lecturer, department=department, room=room_id, day=day, start_time=time_occupied.replace(hour=time_occupied.hour+2) ,duration=1)
                     messages.success(request, 'Lecture added successfuly')
                     return redirect('../Lecture/master')
-            else:
+            elif room_occupied == True:
                 messages.error(request, 'Room is occupied at that time')
+            elif student_occupied == True:
+                messages.error(request, 'Departmental Students have an ongoing lecture')                
         else:
             messages.error(request, 'An error occured')
     context = {
@@ -82,19 +89,6 @@ class day():
 days = [day('Monday'), day('Tuesday'),day('Wednesday'), day('Thursday'), day('Friday')]
 
 groups = ['student','lecturer']
-    
-'''
-def lecture_list_view(request):
-    rooms = Room.objects.all()
-    lectures = Lecture.objects.all()
-    context = {
-        'lectures' : lectures,
-        'rooms' : rooms,
-        'time' : timestamps,
-        'days' : days,
-    }
-    return render(request, 'Lectures/lecture_master_timetable.html', context)
-'''
 
 
 def room_detail_view(request):
@@ -131,7 +125,7 @@ def lecture_student_view(request):
     return render(request, 'Lectures/lecture_student_timetable.html', context)
 
 class LectureUpdateView(UpdateView):
-    template_name = 'Departments/department_update.html'
+    template_name = 'Lectures/lecture_update.html'
     form_class = LectureModelForm
     
     def get_object(self):
