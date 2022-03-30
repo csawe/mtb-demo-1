@@ -24,6 +24,8 @@ def user_registration_view(request):
         user.is_active = True
         user.save()
         messages.success(request, 'Registration Successfull')
+        if request.user.is_authenticated:
+            return redirect('../list')
         return redirect('../../')
 
     context = {
@@ -74,15 +76,22 @@ class UserUpdateView(UpdateView):
         messages.success(self.request, 'Log in details updated successfully.')
         return redirect('../../')
     
-def UserUpdateView2(request):
-    form = NewUserForm(request.POST or None)
-    user = NewUser.objects.get(id= request.user.id)
-    if form.is_valid():
-        form.save()
-        messages.success(request, 'Log in details updated successfully.')
-        return redirect('../')
-        
+def user_list_view(request):
+    users = NewUser.objects.all()
+    if request.method == "POST":
+        upd_id = request.POST.get('update-id', None)
+        del_id = request.POST.get('delete-id', None)
+        if upd_id:
+            print("Here")
+            user = NewUser.objects.get(id=upd_id)
+            return redirect(f'../update/{user.id}')
+        elif del_id:
+            user = NewUser.objects.get(id=del_id)
+            user.delete()
+            messages.success(request, "User deleted successfully.")
+            return redirect("../list")
     context = {
-        'form' : form
+        'users':users,
     }
-    return render(request, 'Units/unit_update.html', context)
+    return render(request, "Users/user_list.html", context)
+    

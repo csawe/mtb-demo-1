@@ -1,4 +1,4 @@
-from datetime import time, datetime, date
+from datetime import time, datetime, date, timedelta
 import calendar
 
 from django.shortcuts import redirect, render, get_object_or_404
@@ -38,15 +38,21 @@ def lecture_create_view(request):
             time_occupied = form.cleaned_data.get('start_time')
             day = form.cleaned_data.get('day')
             department = form.cleaned_data.get('department')
+            duration = form.cleaned_data.get('duration')
             lectures = Lecture.objects.all()
             room_occupied = False
             student_occupied = False
-            for lec in lectures:
-                if (lec.room == room_id and lec.start_time == time_occupied and lec.day == day):
-                    room_occupied = True      
-                elif (lec.start_time == time_occupied and lec.day == day and lec.department == department):
-                    student_occupied = True 
-            
+            if duration > 1:
+                count = 0
+                while count < 3:
+                    for lec in lectures:
+                        lec.start_time = lec.start_time.replace(hour = lec.start_time.hour + count)
+                        if (lec.room == room_id and lec.start_time == time_occupied and lec.day == day):
+                            room_occupied = True      
+                        elif (lec.start_time == time_occupied and lec.day == day and lec.department == department):
+                            student_occupied = True 
+                    count = count + 1
+    
             if room_occupied is False and student_occupied is False:
                 unit = form.cleaned_data.get('unit')
                 department = form.cleaned_data.get('department')

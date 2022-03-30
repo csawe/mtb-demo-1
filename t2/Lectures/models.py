@@ -20,7 +20,7 @@ REASONS = (
     ('CAT','I want to hold a cat in the room'),
     ('Private class meeting','I want to hold a private meeting in the selected room'),
     ('Group Discussion', 'I want to hold a group study session in the selected room'),
-)
+) 
 
 lecturers = NewUser.objects.filter(group='lecturer')
 
