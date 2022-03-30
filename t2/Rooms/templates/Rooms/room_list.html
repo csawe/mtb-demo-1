@@ -6,7 +6,8 @@
 
     <div>
         <br>
-        <table>
+        <center><h2>Rooms</h2></center>
+        <table style="margin: 10px auto; opacity:.8; border-radius: 8px; padding: 10px; background: #f4f7f8; max-width: 1000px;">
             <tr>
                 <th style="width:100px; height:20px">Room id</th>
                 <th style="width:100px; height:20px">Room Location</th>
@@ -25,13 +26,13 @@
                         <td style="width:10px">
                             <form action='' method="POST" id='unitform'>
                                 {% csrf_token %}
-                                <button class="btn btn-success" name='upd_id' type='submit' value='{{room.id}}' form='unitform'class='btn btn-primary' style="margin-right: auto; margin-left:10%; color: black; background-color: rgb(48, 187, 241); font-size: 12px; border-radius: 8px; padding: 6px 12px;">Edit</button>
+                                <button class="btn btn-success" name='upd_id' type='submit' value='{{room.id}}' form='unitform'class='btn btn-primary' style="color: black; background-color: rgb(48, 187, 241); font-size: 12px; border-radius: 8px; padding: 6px 12px;">Edit</button>
                             </form>
                         </td>
                         <td>
                             <form action='' method="POST" id='unitform'>
                                 {% csrf_token %}
-                                <button class="btn btn-fail" name='del_id' type='submit' value='{{room.id}}' form='unitform' class='btn btn-primary' style="margin-right: auto; margin-left:10%; color: black; background-color: rgb(48, 187, 241); font-size: 12px; border-radius: 8px; padding: 6px 12px;">Delete</button>
+                                <button class="btn btn-fail" name='del_id' type='submit' value='{{room.id}}' form='unitform' class='btn btn-primary' style=" color: black; background-color: rgb(48, 187, 241); font-size: 12px; border-radius: 8px; padding: 6px 12px;">Delete</button>
                             </form>
                         </td>
                     {% endif %}
@@ -40,23 +41,20 @@
         </table>
     </div>
     {% if user.is_staff %}
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <a href='../Room/create'><button class="btn btn-success" class='btn btn-primary' style="margin-right: auto; margin-left:10%; color: black; background-color: rgb(48, 187, 241); font-size: 12px; border-radius: 8px; padding: 6px 6px;">Add New Room</button></a>
-            </div>        
-        </div>
+        <center>
+            <a href='../Room/create'><button class="btn btn-success" class='btn btn-primary' style="color: black; background-color: rgb(48, 187, 241); font-size: 12px; border-radius: 8px; padding: 6px 6px;">Add New Room</button></a>
+        </center>
     {% endif %}
-    
-
-
     <br><br>
     <div>
         <p>
-            <h4>
+            <center><h4>
                 Check available rooms
             </h4>
-            <form method="POST" id="free-room" style="margin: 10px auto; opacity:.8; border-radius: 8px; padding: 10px; background: #f4f7f8; max-width: 500px;">
+            </center>
+            <form method="POST" id="free-room" style="margin: 10px auto; opacity:.8; border-radius: 8px; padding: 10px; background: #f4f7f8; max-width: 300px;">
                 {% csrf_token %}
+                <center>
                 <label for="dy">Enter Day</label>
                 <select name="dy" id="dy" form="free-room">
                         <option value ="monday">Monday</option>
@@ -70,14 +68,17 @@
                 <input type="time" name="tm" id="tm" required placeholder="Time">
                 <br>
                 <input type="submit" name="Check for free rooms">
+            </center>
             </form>
         </p>
             <table style="margin: 10px auto; opacity:.8; border-radius: 8px; padding: 10px; background: #f4f7f8; max-width: 500px;">
+                {% if freerooms %}
                 <tr>
                     <th style="width:100px; height:20px">Room id</th>
                     <th style="width:100px; height:20px">Room Location</th>
                     <th style="width:100px; height:20px">Room Capacity</th>
                 </tr>
+                {% endif %}
                 {% for room in freerooms %}
                     <tr>
                         <td style="width:100px; height:20px">{{room.room_id}}</td>

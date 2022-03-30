@@ -6,8 +6,9 @@ Master timetable
 
 {% block content %}
 
-    <form method="POST" id="free-room" style="margin: 10px auto; opacity:.8; border-radius: 8px; padding: 10px; background: #f4f7f8; max-width: 500px;">
+    <form method="POST" id="free-room" style="margin: 10px auto; opacity:.8; border-radius: 8px; padding: 10px; background: #f4f7f8; max-width: 250px;">
         {% csrf_token %}
+        <center>
         <label for="dy">Enter Room</label>
         <select name="dy" id="dy" form="free-room">
                 {% for room in rooms %}
@@ -15,11 +16,12 @@ Master timetable
                 {% endfor %}
         </select>
         <br>
-        <input type="submit" name="Check for free rooms">
+        <input type="submit" value="Check room timetable">
+        </center>
     </form>
     <br>
-        <center><h2 style="margin: 10px auto; padding-left:5%">Room: {{rid.room_id| title}}</h2></center>
-        <table border="1" style="margin-left:auto; margin-right:auto; background: rgb(204,222,241, 0.8);">
+        <center><h2>Room: {{rid.room_id| title}}</h2></center>
+        <table border="1" style="margin-left:auto; margin-right:auto; background: rgb(204,222,241, 0.8); border-radius:8px;">
         <tr>
             <th style="width:100px; height:20px">Time</th>
             {% for t in time %}
@@ -47,13 +49,9 @@ Master timetable
     </table>
     <br>
     {% if user.group ==  "lecturer" or user.is_staff %}
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <a href='../create'><button class="btn btn-primary" style="margin-right: auto; margin-left:10%; color: black; background-color: rgb(48, 187, 241); font-size: 12px; border-radius: 8px; padding: 6px 12px;">Book a room</button></a>
-            </div>        
-        </div>
+        <center>
+            <a href='../create'><center><button class="btn btn-primary" style="justify-content:center; color: black; background-color: rgb(48, 187, 241); font-size: 12px; border-radius: 8px; padding: 6px 12px;">Book a room</button></center></a>
+        </center>        
     {% endif %}
-    
-
 
 {% endblock content %}

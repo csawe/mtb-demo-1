@@ -1,3 +1,4 @@
+from tokenize import group
 from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, authenticate, logout
@@ -77,21 +78,25 @@ class UserUpdateView(UpdateView):
         return redirect('../../')
     
 def user_list_view(request):
-    users = NewUser.objects.all()
+    context = {}
     if request.method == "POST":
-        upd_id = request.POST.get('update-id', None)
+        choice = request.POST.get('choice')
         del_id = request.POST.get('delete-id', None)
-        if upd_id:
-            print("Here")
-            user = NewUser.objects.get(id=upd_id)
-            return redirect(f'../update/{user.id}')
-        elif del_id:
+        if choice:
+            if choice == "all":
+                users = NewUser.objects.all()
+                context['users'] = users
+            elif choice == "lecturer":
+                users = NewUser.objects.filter(group="lecturer")
+                context['users'] = users
+            elif choice == "student":
+                users = NewUser.objects.filter(group="student")
+                context['users'] = users
+            context['choice'] = choice
+        if del_id:
             user = NewUser.objects.get(id=del_id)
             user.delete()
             messages.success(request, "User deleted successfully.")
             return redirect("../list")
-    context = {
-        'users':users,
-    }
     return render(request, "Users/user_list.html", context)
     
