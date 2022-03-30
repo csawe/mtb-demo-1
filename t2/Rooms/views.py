@@ -58,6 +58,8 @@ def room_list_view(request):
         elif dy and t:
             tm = time(int(t[:2]))
             free_rooms = []
+            dy = dy.strip()
+            dy = dy.capitalize()
             lectures = Lecture.objects.filter(day=dy)
             for room in Rooms:
                 occupied = False
@@ -67,10 +69,10 @@ def room_list_view(request):
                         occupied = True
                         break
                 if not occupied:
-                    print(room.room_id,"is not occupied")
+                    print(room.room_id,"is not occupied on ", dy)
                     free_rooms.append(room)
                 else:
-                    print(room.room_id,"is occupied")
+                    print(room.room_id,"is occupied", dy)
             context['freerooms'] = free_rooms
     return render(request, 'Rooms/room_list.html', context)
 
